@@ -14,7 +14,7 @@ type MongoDB struct {
 	Client *mongo.Client
 }
 var user = "tphuc"
-var password = "74488222"
+var password = ""
 var urlMongo = "mongodb+srv://"+user+":"+password+"@test.onfty.mongodb.net/myFirstDatabase?retryWrites=true&w=majority"
 
 
