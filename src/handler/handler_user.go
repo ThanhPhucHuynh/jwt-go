@@ -7,6 +7,7 @@ import (
 	driver "jwt-go/src/driver"
 	models "jwt-go/src/model/user"
 	"net/http"
+	"strings"
 	"time"
 
 	"github.com/dgrijalva/jwt-go"
@@ -91,6 +92,36 @@ func Login(w http.ResponseWriter, r *http.Request){
 		Token: tokenString,
 		Status: http.StatusOK,
 	})
+}
+func GetUser(w http.ResponseWriter, r *http.Request){
+	tokenHeader := r.Header.Get("Authorization")
+	if tokenHeader == "" {
+		ResponseErr(w, http.StatusForbidden)
+		return
+	}
+	splitted := strings.Split(tokenHeader," ")
+	
+	if len(splitted) != 2 {
+		ResponseErr(w, http.StatusForbidden)
+		return
+	}
+	tokenpath := splitted[1]
+	fmt.Println(tokenpath)
+	tk := &Claims{}
+
+	token, err := jwt.ParseWithClaims(tokenpath, tk,func(token *jwt.Token)(interface{},error){
+		return jwtKey, nil
+	})
+
+	if err != nil{
+		fmt.Println(err)
+		ResponseErr(w, http.StatusInternalServerError)
+		return
+	}
+	if token.Valid{
+		ResponseSusscessfully(w,token.Claims)
+	}
+	
 }
 
 func ResponseErr(w http.ResponseWriter, statusCode int)  {
