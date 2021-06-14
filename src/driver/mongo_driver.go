@@ -1,5 +1,6 @@
 package driver
 
+
 import (
 	"context"
 	"fmt"
@@ -14,7 +15,7 @@ type MongoDB struct {
 	Client *mongo.Client
 }
 var user = "tphuc"
-var password = ""
+var password = "74488222"
 var urlMongo = "mongodb+srv://"+user+":"+password+"@test.onfty.mongodb.net/myFirstDatabase?retryWrites=true&w=majority"
 
 
